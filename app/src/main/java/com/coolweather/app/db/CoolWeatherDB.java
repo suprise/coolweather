@@ -40,6 +40,20 @@ public class CoolWeatherDB {
         }
     }
 
+    public Province loadProvinceByName(String provinceName) {
+        Cursor cursor = db.query("Province",null,"province_name=?",new String[] {provinceName},null,null,null,"1");
+
+        if (cursor.moveToFirst()) {
+            do {
+                Province province = new Province();
+                province.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                province.setProvinceName(cursor.getString(cursor.getColumnIndex("province_name")));
+                return province;
+            }while(cursor.moveToNext());
+        }
+        return null;
+    }
+
     public List<Province> loadProvinces() {
         List<Province> list = new ArrayList<Province>();
         Cursor cursor = db.query("Province",null,null,null,null,null,null);
@@ -64,9 +78,25 @@ public class CoolWeatherDB {
         }
     }
 
-    public List<City> loadCity() {
+    public City loadCityByName(String cityName) {
+        Cursor cursor = db.query("City",null,"city_name=?",new String[] {cityName},null,null,null,"1");
+
+        if (cursor.moveToFirst()) {
+            do {
+                City city= new City();
+                city.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                city.setProvinceId(cursor.getInt(cursor.getColumnIndex("province_id")));
+                city.setCityName(cursor.getString(cursor.getColumnIndex("city_name")));
+                city.setCityPinyin(cursor.getString(cursor.getColumnIndex("city_pinyin")));
+                return city;
+            }while(cursor.moveToNext());
+        }
+        return null;
+    }
+
+    public List<City> loadCitiesByProvinceId(int provinceId) {
         List<City> list = new ArrayList<City>();
-        Cursor cursor = db.query("City",null,null,null,null,null,null);
+        Cursor cursor = db.query("City",null,"province_id=?",new String[] {String.valueOf(provinceId)},null,null,null);
 
         if (cursor.moveToFirst()) {
             do {
