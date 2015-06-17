@@ -2,6 +2,7 @@ package com.coolweather.app.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -60,6 +61,10 @@ public class ChooseAreaActivity extends Activity {
                     queryCities();
                 } else if (currentLevel == LEVEL_CITY) {
                     selectedCity = cityList.get(position);
+                    Intent intent = new Intent(ChooseAreaActivity.this,WeatherActivity.class);
+                    intent.putExtra("city_name",selectedCity.getCityName());
+                    startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -108,7 +113,7 @@ public class ChooseAreaActivity extends Activity {
             @Override
             public void onFinish(String response) {
                 boolean result = false;
-                Log.d("ChooseArea",response);
+                Log.d("ChooseArea", response);
                 if ("province".equals(type)) {
                     result = Utility.handleProvincesWithPull(coolWeatherDB,response);
                 } else if ("city".equals(type)) {
@@ -116,7 +121,7 @@ public class ChooseAreaActivity extends Activity {
                 }
 
                 if (result) {
-                    Log.d("ChooseArea",String.valueOf(result));
+                    Log.d("ChooseArea", String.valueOf(result));
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
