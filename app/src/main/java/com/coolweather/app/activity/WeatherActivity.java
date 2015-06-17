@@ -120,7 +120,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
     private void showWeather(JSONObject weatherData) {
         try {
             tempText.setText(weatherData.getString("temperature"));
-            publishText.setText("同步成功");
+            publishText.setText("同步成功 "+System.currentTimeMillis());
             weatherDescText.setText(weatherData.getString("weather"));
             currentDateText.setText(weatherData.getString("date"));
             weatherInfoLayout.setVisibility(View.VISIBLE);

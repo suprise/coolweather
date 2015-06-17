@@ -3,7 +3,9 @@ package com.coolweather.app.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -63,6 +65,8 @@ public class ChooseAreaActivity extends Activity {
                     selectedCity = cityList.get(position);
                     Intent intent = new Intent(ChooseAreaActivity.this,WeatherActivity.class);
                     intent.putExtra("city_name",selectedCity.getCityName());
+                    SharedPreferences.Editor edit = PreferenceManager.getDefaultSharedPreferences(ChooseAreaActivity.this).edit();
+                    edit.putString("city_name",selectedCity.getCityName());
                     startActivity(intent);
                     finish();
                 }
